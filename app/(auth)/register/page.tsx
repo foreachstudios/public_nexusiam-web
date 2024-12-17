@@ -10,17 +10,30 @@ import Link from "next/link"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    companyName: "",
+    customer_email: "",
+    full_name: "",
+    company: "",
+    phone_number: "",
+    password_hash: "",
+    // confirm_password: ""
   })
   const router = useRouter()
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: Implement actual registration logic
-    router.push("/onboarding")
+    e.preventDefault();
+    // if(formData.confirm_password !== formData.password_hash) {
+
+    // }
+    const userInfo = await fetch("http://localhost:8000/auth/register", {
+      method: 'post',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    console.log("---userInfo", userInfo);
+    // router.push("/onboarding")
   }
 
   return (
@@ -37,30 +50,44 @@ export default function RegisterPage() {
           <CardContent className="space-y-4">
             <Input
               type="text"
-              placeholder="Company Name"
-              value={formData.companyName}
-              onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+              placeholder="User Name"
+              value={formData.full_name}
+              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
               required
             />
             <Input
               type="email"
               placeholder="Email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              value={formData.customer_email}
+              onChange={(e) => setFormData({ ...formData, customer_email: e.target.value })}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Company Name"
+              value={formData.company}
+              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Phone Number"
+              value={formData.phone_number}
+              onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
               required
             />
             <Input
               type="password"
               placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              value={formData.password_hash}
+              onChange={(e) => setFormData({ ...formData, password_hash: e.target.value })}
               required
             />
             <Input
               type="password"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              // value={formData.confirm_password}
+              // onChange={(e) => setFormData({ ...formData, confirm_password: e.target.value })}
               required
             />
           </CardContent>

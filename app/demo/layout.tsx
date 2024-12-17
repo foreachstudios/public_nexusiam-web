@@ -1,3 +1,4 @@
+
 import { DashboardNav } from "@/components/dashboard-nav"
 import { UserNav } from "@/components/user-nav"
 import { Shield } from "lucide-react"
@@ -7,6 +8,7 @@ export default function DemoLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b">

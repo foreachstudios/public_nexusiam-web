@@ -1,5 +1,5 @@
 "use client"
-
+import React, { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Overview } from "@/components/dashboard/overview"
 import { RecentActivity } from "@/components/dashboard/recent-activity"
@@ -8,7 +8,54 @@ import { DashboardStats } from "@/components/dashboard/stats-cards"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Info } from "lucide-react"
 
+type LatestInfo = {
+  total_resources: string;
+  resources_with_issues: string;
+  total_policies: string;
+  policies_with_issues: string;
+  time_of_last_scan: string;
+  issue_count: string;
+  accounts_monitored: string;
+};
+
 export default function DashboardContent() {
+
+  const [isloading, setIsloading] = useState(false)
+  const [latestInfo, setLatestInfo] = useState<LatestInfo>({
+    total_resources: '0',
+    resources_with_issues: '0',
+    total_policies: '0',
+    policies_with_issues: '0',
+    time_of_last_scan: '0',
+    issue_count: "0",
+    accounts_monitored: "0",
+  })
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/dashboard`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLatestInfo(data)
+        setIsloading(true)
+        console.log(data);
+        
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
+  }, []);
+
+  
   return (
     <div className="space-y-8">
       <Alert>

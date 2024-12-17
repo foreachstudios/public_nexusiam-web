@@ -1,11 +1,51 @@
 "use client"
-
+import React, { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ResourcesOverview } from "@/components/monitoring/resources-overview"
 import { ResourcesList } from "@/components/monitoring/resources-list"
 import { ResourcesUsage } from "@/components/monitoring/resources-usage"
 
+type Resources = {
+  resource_id: string,
+  cloud_type: string,
+  resource_type: string,
+  owner: string,
+  violation: string,
+  severity: string,
+  creation_time: string,
+  last_used: string,
+  last_rotation: string,
+};
+
 export default function ResourcesPage() {
+
+  const [isloading, setIsloading] = useState(false)
+  const [resources, setResources] = useState<Resources[]>([])
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/inventories`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setResources(data)
+        setIsloading(true)
+        console.log(data);
+        
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
+  }, []);
+
   return (
     <div className="space-y-8">
       <h1 className="text-3xl font-bold">Resources Monitoring</h1>
