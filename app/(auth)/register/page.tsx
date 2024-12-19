@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield } from "lucide-react"
 import Link from "next/link"
+import { AiOutlineWarning  } from "react-icons/ai";
+
+
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -15,25 +18,39 @@ export default function RegisterPage() {
     company: "",
     phone_number: "",
     password_hash: "",
-    // confirm_password: ""
+    confirm_password: ""
   })
+  const [isSubmit, setIsSubmit] = useState(false)
   const router = useRouter()
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // if(formData.confirm_password !== formData.password_hash) {
-
-    // }
-    const userInfo = await fetch("http://localhost:8000/auth/register", {
+    setIsSubmit(true)
+    if(formData.confirm_password !== formData.password_hash) {
+      return false
+    }
+    fetch("http://localhost:8000/auth/register", {
       method: 'post',
       headers: {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
     })
-
-    console.log("---userInfo", userInfo);
-    // router.push("/onboarding")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if(data.status == "success") {
+          router.push("/login")
+        }
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
   }
 
   return (
@@ -86,11 +103,15 @@ export default function RegisterPage() {
             <Input
               type="password"
               placeholder="Confirm Password"
-              // value={formData.confirm_password}
-              // onChange={(e) => setFormData({ ...formData, confirm_password: e.target.value })}
+              value={formData.confirm_password}
+              onChange={(e) => setFormData({ ...formData, confirm_password: e.target.value })}
               required
             />
+            {isSubmit && formData.password_hash !== formData.confirm_password &&
+              <div className="text-[#ff0404] flex items-center gap-2"><AiOutlineWarning /> Confirm Password Not Match</div>
+            }
           </CardContent>
+          
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full">Create Account</Button>
             <div className="text-sm text-muted-foreground text-center">

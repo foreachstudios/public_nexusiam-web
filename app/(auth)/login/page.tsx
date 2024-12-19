@@ -9,14 +9,40 @@ import { Shield } from "lucide-react"
 import Link from "next/link"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+
+
+  const [isSubmit, setIsSubmit] = useState(false)
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password_hash: "",
+  })
   const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement actual login logic
-    router.push("/dashboard")
+    setIsSubmit(true)
+    fetch("http://localhost:8000/auth/login", {
+      method: 'post',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginInfo)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if(data.status == "success") {
+          router.push("/demo")
+        }
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
   }
 
   return (
@@ -35,8 +61,8 @@ export default function LoginPage() {
               <Input
                 type="email"
                 placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={loginInfo.username}
+                onChange={(e) => setLoginInfo({ ...loginInfo, username: e.target.value })}
                 required
               />
             </div>
@@ -44,8 +70,8 @@ export default function LoginPage() {
               <Input
                 type="password"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={loginInfo.password_hash}
+                onChange={(e) => setLoginInfo({ ...loginInfo, password_hash: e.target.value })}
                 required
               />
             </div>
