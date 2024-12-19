@@ -37,6 +37,7 @@ export default function LoginPage() {
       .then((data) => {
         console.log(data);
         if(data.status == "success") {
+          document.cookie = `token=${data.access_token}; path=/`;
           router.push("/demo")
         }
       })

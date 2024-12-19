@@ -18,6 +18,11 @@ export function UserNav() {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
+  const handleLogout = () => {
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+    router.push("/login")
+  }
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -53,7 +58,7 @@ export function UserNav() {
           </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push("/login")}>
+        <DropdownMenuItem onClick={() => handleLogout()}>
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
