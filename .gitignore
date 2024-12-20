@@ -1,5 +1,7 @@
 .venv
+.venvo
 .bolt
+.bolto
 .next
 .old
 node_modules
