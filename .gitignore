@@ -2,3 +2,5 @@
 .next
 .venv
 node_modules
+.env
+.envold
