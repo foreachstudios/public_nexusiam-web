@@ -1,5 +1,6 @@
 .venv
 .bolt
 .next
-.old
 node_modules
+
+.env
