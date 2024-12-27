@@ -10,7 +10,6 @@ import Link from "next/link"
 
 export default function LoginPage() {
 
-
   const [isLoading, setIsLoading] = useState(false)
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -22,7 +21,9 @@ export default function LoginPage() {
     if(!isLoading) {
       e.preventDefault()
       setIsLoading(true)
-      fetch("http://localhost:8000/auth/login", {
+      console.log("---------1111111111111--------", process.env.NEXT_PUBLIC_BACKEND_URL);
+      
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL=}/auth/login`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
