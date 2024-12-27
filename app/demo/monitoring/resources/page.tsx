@@ -23,7 +23,7 @@ export default function ResourcesPage() {
   const [resources, setResources] = useState<Resources[]>([])
 
   useEffect(() => {
-    fetch(`http://localhost:8000/inventories`, {
+    fetch(`${process.env.BACKEND_URL}/inventories`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

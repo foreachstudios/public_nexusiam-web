@@ -20,7 +20,7 @@ export default function RolesPage() {
   const [roles, setRoles] = useState<Role[]>([])
 
   useEffect(() => {
-    fetch(`http://localhost:8000/roles`, {
+    fetch(`{process.env.BACKEND_URL}/roles`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

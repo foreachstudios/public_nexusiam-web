@@ -32,7 +32,7 @@ export default function DashboardContent() {
   })
 
   useEffect(() => {
-    fetch(`http://localhost:8000/dashboard`, {
+    fetch(`${process.env.BACKEND_URL}/dashboard`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
