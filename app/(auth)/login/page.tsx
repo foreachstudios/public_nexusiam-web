@@ -21,9 +21,7 @@ export default function LoginPage() {
     if(!isLoading) {
       e.preventDefault()
       setIsLoading(true)
-      console.log("---------1111111111111--------", process.env.NEXT_PUBLIC_BACKEND_URL);
-      
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL=}/auth/login`, {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
