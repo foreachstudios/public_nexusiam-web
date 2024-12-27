@@ -29,7 +29,7 @@ export default function RegisterPage() {
     if(formData.confirm_password !== formData.password_hash) {
       return false
     }
-    fetch(`${process.env.BACKEND_URL}/auth/register`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
       method: 'post',
       headers: {
           'Content-Type': 'application/json'

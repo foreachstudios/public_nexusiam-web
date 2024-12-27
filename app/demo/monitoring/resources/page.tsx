@@ -23,7 +23,7 @@ export default function ResourcesPage() {
   const [resources, setResources] = useState<Resources[]>([])
 
   useEffect(() => {
-    fetch(`${process.env.BACKEND_URL}/inventories`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/inventories`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
