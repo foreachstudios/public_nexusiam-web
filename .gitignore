@@ -1,6 +1,11 @@
-.venv
 .bolt
 .next
+<<<<<<< HEAD
 node_modules
 
 .env
+=======
+.venv
+node_modules
+.env
+>>>>>>> development

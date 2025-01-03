@@ -32,7 +32,7 @@ export default function DashboardContent() {
   })
 
   useEffect(() => {
-    fetch(`http://localhost:8000/dashboard`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -58,13 +58,6 @@ export default function DashboardContent() {
   
   return (
     <div className="space-y-8">
-      <Alert>
-        <Info className="h-4 w-4" />
-        <AlertTitle>Demo Mode</AlertTitle>
-        <AlertDescription>
-          You are viewing a demo version of NexusIAM. Some features may be limited.
-        </AlertDescription>
-      </Alert>
       
       <DashboardStats />
       

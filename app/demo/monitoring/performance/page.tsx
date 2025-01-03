@@ -5,12 +5,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Info, Cpu, HardDrive, Network, Memory } from "lucide-react"
+import { Info, Cpu, HardDrive, Network, MemoryStick } from "lucide-react"
 
 // Performance Metrics Data
 const metrics = [
   { name: "CPU Usage", value: "45%", status: "normal", icon: Cpu },
-  { name: "Memory Usage", value: "72%", status: "warning", icon: Memory },
+  { name: "Memory Usage", value: "72%", status: "warning", icon: MemoryStick },
   { name: "Network I/O", value: "1.2 GB/s", status: "normal", icon: Network },
   { name: "Disk Usage", value: "85%", status: "critical", icon: HardDrive },
 ]
